@@ -3,294 +3,553 @@
 <html lang="ru">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Москва 90-х</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Москва 90-х — Хроники</title>
 <script src="https://telegram.org/js/telegram-web-app.js"></script>
 <style>
-*{box-sizing:border-box}
-body{
- margin:0;background:#171313;color:#eee4d7;
- font-family:Arial,sans-serif;padding:15px;
+:root {
+  --bg:#101114;
+  --panel:#1b1d22;
+  --panel2:#252831;
+  --gold:#d5a64b;
+  --text:#f1eee7;
+  --muted:#a6a39c;
+  --red:#a94343;
+  --green:#5d9b70;
 }
-header{text-align:center;padding:15px}
-h1{color:#c8a36b;letter-spacing:3px}
-.subtitle{color:#9c8980;font-size:12px}
-.panel{
- background:#251d1b;border:1px solid #514039;
- border-radius:14px;padding:15px;margin-bottom:12px;
+* {box-sizing:border-box}
+body {
+  margin:0;
+  background:var(--bg);
+  color:var(--text);
+  font-family:Arial,sans-serif;
 }
-button{
- background:#483128;color:#f1dfc7;border:1px solid #8b664b;
- border-radius:9px;padding:12px;cursor:pointer;
+header {
+  padding:22px 17px 15px;
+  background:linear-gradient(130deg,#29251f,#111216);
+  border-bottom:1px solid #38332b;
 }
-button:active{transform:scale(.98)}
-button.active{background:#85603c}
-.buttons{display:grid;grid-template-columns:1fr 1fr;gap:8px}
-.menu{display:grid;grid-template-columns:repeat(2,1fr);gap:8px}
-.menu button{width:100%}
-.card{
- background:#302522;border-radius:10px;
- padding:12px;margin:8px 0;border:1px solid #59443a;
+h1 {font-size:24px;margin:0 0 6px}
+h2 {font-size:20px;margin:0 0 13px}
+h3 {font-size:16px;margin:0 0 8px}
+p {line-height:1.45}
+.small {font-size:12px;color:var(--muted)}
+.gold {color:var(--gold)}
+.container {padding:15px;max-width:760px;margin:auto}
+.panel {
+  background:var(--panel);
+  border:1px solid #30333a;
+  border-radius:13px;
+  padding:14px;
+  margin-bottom:12px;
 }
-.small{font-size:12px;color:#b7a69b}
-.gold{color:#d2ad72}
-.red{color:#cf8277}
-.hidden{display:none}
-.progress{
- height:7px;background:#493b34;border-radius:10px;
- overflow:hidden;margin-top:8px
+.hero {
+  padding:24px 17px;
+  border-radius:15px;
+  margin-bottom:15px;
+  background:linear-gradient(135deg,#393126,#1c1d20 65%);
+  border:1px solid #62503a;
 }
-.progress div{height:100%;background:#c69b60;width:20%}
-#content{margin-top:15px}
+button {
+  border:0;
+  border-radius:9px;
+  padding:12px;
+  color:white;
+  background:#343740;
+  font-size:14px;
+  font-weight:bold;
+  cursor:pointer;
+}
+button:active {transform:scale(.98)}
+button.primary {background:#8e682f;color:#fff}
+button.green {background:#376b49}
+button.red {background:#773b3b}
+button:disabled {opacity:.4}
+.actions {display:grid;grid-template-columns:1fr 1fr;gap:9px}
+.full {width:100%;margin-top:8px}
+.stats {
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:8px;
+  margin-bottom:13px;
+}
+.stat {
+  background:var(--panel2);
+  border-radius:10px;
+  padding:11px;
+}
+.stat b {display:block;font-size:18px;color:var(--gold)}
+.stat span {font-size:11px;color:var(--muted)}
+.nav {
+  display:flex;
+  gap:7px;
+  overflow-x:auto;
+  padding:5px 0 12px;
+}
+.nav button {white-space:nowrap;padding:10px 13px}
+.item {
+  background:#252831;
+  border-radius:10px;
+  padding:12px;
+  margin:8px 0;
+}
+.item-top {
+  display:flex;
+  justify-content:space-between;
+  gap:10px;
+}
+.tag {
+  font-size:11px;
+  color:var(--gold);
+  border:1px solid #725b36;
+  border-radius:20px;
+  padding:4px 7px;
+  white-space:nowrap;
+}
+.bar {
+  height:7px;
+  background:#3b3d43;
+  border-radius:8px;
+  overflow:hidden;
+  margin:9px 0;
+}
+.bar div {height:100%;background:var(--gold)}
+.hidden {display:none!important}
+footer {
+  text-align:center;
+  color:#777;
+  font-size:11px;
+  padding:20px;
+}
+hr {border:0;border-top:1px solid #383a40;margin:14px 0}
 </style>
 </head>
 <body>
-
 <header>
- <div class="gold">ИСТОРИЧЕСКАЯ СТРАТЕГИЯ</div>
- <h1>МОСКВА 90-х</h1>
- <div class="subtitle">КРИМИНАЛЬНЫЕ ХРОНИКИ · 1991–2000</div>
+  <div class="small gold">ИНТЕРАКТИВНАЯ ИСТОРИЧЕСКАЯ ИГРА</div>
+  <h1>МОСКВА 90-Х</h1>
+  <div class="small">Криминальные хроники · 1991–2000</div>
 </header>
 
-<div class="panel">
- <h3>Выбери реальность</h3>
- <div class="buttons">
-  <button id="historic" class="active">📜 Историческая</button>
-  <button id="alternate">🎭 Альтернативная</button>
- </div>
- <p class="small" id="modeText">
-  Документальная история Москвы.
- </p>
-</div>
+<main class="container">
+  <section id="home">
+    <div class="hero">
+      <div class="small gold">НОВАЯ ИГРА</div>
+      <h2>Москва меняется. Твоя история начинается.</h2>
+      <p class="small">Выбери исторический архив или альтернативную реальность. В каждом режиме собственный прогресс.</p>
+    </div>
+    <div class="panel">
+      <h3>📜 Исторический режим</h3>
+      <p class="small">Реальные районы, события, исторические личности и справочные материалы о Москве 1990-х годов.</p>
+      <button class="primary full" onclick="startMode('history')">Открыть исторический режим</button>
+    </div>
+    <div class="panel">
+      <h3>🌆 Альтернативная реальность</h3>
+      <p class="small">Вымышленная история. Развивай организацию, предприятия и влияние в районах города.</p>
+      <button class="primary full" onclick="startMode('alt')">Начать альтернативную игру</button>
+    </div>
+    <button class="full" onclick="showAbout()">ℹ️ О проекте</button>
+  </section>
 
-<div class="panel">
- <div class="gold">ТЕКУЩИЙ ГОД</div>
- <h2 id="year">1991</h2>
- <div class="small">Москва, Россия</div>
-</div>
-
-<div class="menu">
- <button onclick="show('map')">🗺 Карта Москвы</button>
- <button onclick="show('groups')">Организации</button>
- <button onclick="show('people')">Персонажи</button>
- <button onclick="show('events')">Хронология</button>
- <button onclick="show('business')">Предприятия</button>
- <button onclick="show('story')">Сюжет</button>
-</div>
-
-<div id="content" class="panel">
- <h3>Добро пожаловать</h3>
- <p>Начни исследование Москвы 1991 года.</p>
-</div>
+  <section id="game" class="hidden">
+    <div class="nav">
+      <button onclick="showTab('overview')">Главная</button>
+      <button onclick="showTab('map')">Районы</button>
+      <button onclick="showTab('business')">Бизнес</button>
+      <button onclick="showTab('missions')">Задания</button>
+      <button onclick="showTab('events')">События</button>
+      <button onclick="showTab('archive')">Архив</button>
+    </div>
+    <div id="screen"></div>
+    <button class="full" onclick="goHome()">← В главное меню</button>
+  </section>
+</main>
+<footer>Москва 90-х · Игровой исторический проект</footer>
 
 <script>
-const tg=window.Telegram?.WebApp;
-tg?.ready();
-tg?.expand();
-
-let mode=localStorage.getItem("moscow_mode")||"historic";
-let year=Number(localStorage.getItem("moscow_year"))||1991;
-let influence=Number(localStorage.getItem("moscow_influence"))||20;
-let money=Number(localStorage.getItem("moscow_money"))||1000;
-
-const districts=[
-"Чертаново","Северное Чертаново","Южное Чертаново",
-"Бирюлёво","Царицыно","Орехово-Борисово",
-"Люблино","Марьино","Печатники","Кузьминки",
-"Текстильщики","Измайлово","Перово","Гольяново",
-"Сокольники","Солнцево","Кунцево","Медведково",
-"Отрадное","Алтуфьево","Арбат","Таганский район"
+const $ = id => document.getElementById(id);
+const districts = [
+  "Чертаново","Северное Чертаново","Южное Чертаново",
+  "Бирюлёво","Царицыно","Орехово-Борисово",
+  "Люблино","Марьино","Печатники","Кузьминки",
+  "Текстильщики","Измайлово","Перово","Гольяново",
+  "Сокольники","Солнцево","Кунцево","Медведково",
+  "Отрадное","Алтуфьево","Арбат","Таганский район"
 ];
 
-const groups=[
-"Солнцевская",
-"Ореховская",
-"Измайловская",
-"Люберецкая",
-"Подольская",
-"Долгопрудненская",
-"Медведковская",
-"Таганская"
+const historicalGroups = [
+  {
+    name:"Солнцевская группировка",
+    info:"Одна из наиболее известных московских преступных группировок периода 1990-х годов. Историю её деятельности следует рассматривать в контексте материалов прессы, судебных документов и исследований."
+  },
+  {
+    name:"Ореховская группировка",
+    info:"Известная московская преступная группировка, действовавшая в конце XX века. Её история связана с криминальной обстановкой Москвы 1990-х годов."
+  },
+  {
+    name:"Измайловская группировка",
+    info:"Название, встречающееся в материалах о московской организованной преступности 1990-х годов. Отдельные сведения о структуре и связях могут различаться в источниках."
+  },
+  {
+    name:"Люберецкая группировка",
+    info:"Объединение, упоминаемое в материалах о криминальной истории Московского региона конца XX века."
+  },
+  {
+    name:"Подольская группировка",
+    info:"Одна из организаций, фигурирующих в публикациях и материалах о преступных сообществах Московского региона."
+  },
+  {
+    name:"Медведковская группировка",
+    info:"Упоминается в исторических материалах о московской организованной преступности."
+  }
 ];
 
-const people=[
-{
- name:"Сергей Тимофеев",
- nickname:"Сильвестр",
- info:"Реальная историческая фигура, известная в материалах о московском криминальном мире 1990-х. Биографические сведения и связи необходимо проверять по историческим источникам."
-}
+const historicalPeople = [
+  {
+    name:"Сергей Тимофеев («Сильвестр»)",
+    info:"Фигура, широко упоминаемая в публикациях об организованной преступности Москвы 1990-х годов. Для точного изучения биографии важно сопоставлять публикации с судебными и архивными материалами."
+  },
+  {
+    name:"Отари Квантришвили",
+    info:"Предприниматель и общественный деятель, чьё имя широко освещалось в контексте криминальной истории Москвы 1990-х годов. Обстоятельства его гибели стали предметом расследования и многочисленных публикаций."
+  }
 ];
 
-const events=[
-[1991,"Распад СССР","Начало новой политической и экономической эпохи."],
-[1992,"Экономические реформы","Изменение экономической системы страны."],
-[1993,"Политический кризис","Серьёзные события политической истории России."],
-[1994,"Перемены в Москве","Продолжение экономической и общественной трансформации."],
-[1995,"Середина десятилетия","Изменение городской и экономической среды."],
-[1996,"Президентские выборы","Важный политический период."],
-[1997,"Экономическое развитие","Изменение деловых отношений."],
-[1998,"Финансовый кризис","Дефолт и экономические последствия."],
-[1999,"Переходный период","Новая политическая эпоха."],
-[2000,"Новое десятилетие","Изменение общественной жизни."]
+const events = [
+  ["1991","Распад СССР. Начало масштабных политических и экономических преобразований."],
+  ["1992","Либерализация цен и изменение экономической системы."],
+  ["1993","Конституционный кризис в России."],
+  ["1994","Продолжаются изменения в предпринимательской и общественной жизни Москвы."],
+  ["1995","Экономические трудности и изменения в городской жизни."],
+  ["1996","Президентские выборы и дальнейшие политические преобразования."],
+  ["1998","Финансовый кризис в России."],
+  ["1999","Новый этап политических и экономических изменений."],
+  ["2000","Начало нового периода российской истории."]
 ];
 
-function save(){
- localStorage.setItem("moscow_mode",mode);
- localStorage.setItem("moscow_year",year);
- localStorage.setItem("moscow_influence",influence);
- localStorage.setItem("moscow_money",money);
+const businesses = [
+  {id:"market",name:"Небольшой магазин",cost:5000,income:500,desc:"Торговое предприятие."},
+  {id:"garage",name:"Автомастерская",cost:9000,income:900,desc:"Обслуживание автомобилей."},
+  {id:"cafe",name:"Кафе",cost:14000,income:1300,desc:"Небольшое городское заведение."},
+  {id:"warehouse",name:"Склад",cost:20000,income:1900,desc:"Логистика и хранение товаров."},
+  {id:"office",name:"Офисная компания",cost:30000,income:3000,desc:"Услуги для предпринимателей."},
+  {id:"center",name:"Общественный центр",cost:25000,income:2200,desc:"Социальные проекты и мероприятия."}
+];
+
+const stories = [
+  {
+    title:"Новый рынок",
+    text:"В районе открывается торговая площадка. Местные предприниматели предлагают сотрудничество.",
+    choices:[
+      {name:"Поддержать торговцев",money:-1000,rep:8,influence:5},
+      {name:"Организовать ярмарку",money:-2000,rep:15,influence:10},
+      {name:"Отказаться",money:0,rep:0,influence:0}
+    ]
+  },
+  {
+    title:"Проблемы района",
+    text:"Жители жалуются на плохое освещение и состояние дворов.",
+    choices:[
+      {name:"Оплатить ремонт освещения",money:-2500,rep:18,influence:8},
+      {name:"Провести встречу с жителями",money:-500,rep:10,influence:5},
+      {name:"Пока не вмешиваться",money:0,rep:-3,influence:0}
+    ]
+  },
+  {
+    title:"Конкуренция",
+    text:"В районе появляется новый предприниматель. Можно искать партнёрство или улучшить собственный сервис.",
+    choices:[
+      {name:"Предложить сотрудничество",money:-1000,rep:10,influence:8},
+      {name:"Улучшить качество услуг",money:-2000,rep:12,influence:10},
+      {name:"Ничего не менять",money:0,rep:0,influence:0}
+    ]
+  }
+];
+
+function freshSave(mode) {
+  return {
+    mode,
+    year:1991,
+    money:25000,
+    reputation:10,
+    level:1,
+    influence:0,
+    owned:[],
+    districts:{},
+    completed:[],
+    eventIndex:0,
+    historySeen:[]
+  };
 }
 
-function setMode(m){
- mode=m;
- document.getElementById("historic").classList.toggle("active",m==="historic");
- document.getElementById("alternate").classList.toggle("active",m==="alternate");
- document.getElementById("modeText").textContent=
- m==="historic"
- ?"Историческая хроника. Реальные личности и события, без изменения подтверждённой истории."
- :"Альтернативная реальность. Вымышленные организации и собственные сюжетные решения.";
- save();
- show("home");
+let mode = null;
+let tab = "overview";
+let save = null;
+let activeEvent = null;
+
+function loadSave(m) {
+  try {
+    const raw = localStorage.getItem("moscow90_"+m);
+    return raw ? JSON.parse(raw) : freshSave(m);
+  } catch(e) {
+    return freshSave(m);
+  }
 }
 
-document.getElementById("historic").onclick=()=>setMode("historic");
-document.getElementById("alternate").onclick=()=>setMode("alternate");
-
-function show(page){
- const c=document.getElementById("content");
- let html="";
-
- if(page==="home"){
- html="<h3>Москва, 1991 год</h3><p>Выбери раздел игры.</p>";
- }
-
- if(page==="map"){
- html="<h3>Районы Москвы</h3>";
- districts.forEach(d=>{
- html+=`<div class="card">
- <b>${d}</b>
- <p class="small">Историческая справка и события района.</p>
- <button onclick="districtInfo('${d}')">Открыть</button>
- </div>`;
- });
- }
-
- if(page==="groups"){
- html="<h3>Исторический каталог</h3>";
- if(mode==="historic"){
- groups.forEach(g=>{
- html+=`<div class="card">
- <b>${g}</b>
- <p class="small">Историческое досье. Сведения требуют проверки по источникам.</p>
- </div>`;
- });
- }else{
- ["Союз Речной","Кооператив Южный","Артель Восток"].forEach(g=>{
- html+=`<div class="card">
- <b>${g}</b>
- <p class="small">Вымышленная организация альтернативной кампании.</p>
- </div>`;
- });
- }
- }
-
- if(page==="people"){
- html="<h3>Персонажи</h3>";
- if(mode==="historic"){
- people.forEach(p=>{
- html+=`<div class="card">
- <h3>${p.name}</h3>
- <div class="gold">${p.nickname}</div>
- <p class="small">${p.info}</p>
- </div>`;
- });
- }else{
- html="<p>В альтернативном режиме используются вымышленные персонажи.</p>";
- }
- }
-
- if(page==="events"){
- html="<h3>Хронология</h3>";
- events.forEach(e=>{
- html+=`<div class="card">
- <b class="gold">${e[0]} год</b>
- <h4>${e[1]}</h4>
- <p class="small">${e[2]}</p>
- </div>`;
- });
- }
-
- if(page==="business"){
- html="<h3>Предприятия</h3>";
- if(mode==="historic"){
- html="<h3>Экономическая история</h3><p>Изучение предприятий и экономических перемен эпохи.</p>";
- }else{
- html+=`<div class="card">
- <b>Автомастерская</b>
- <p>Стоимость проекта: 300 рублей.</p>
- <button onclick="buy(300)">Развивать</button>
- </div>
- <div class="card">
- <b>Магазин</b>
- <p>Стоимость проекта: 500 рублей.</p>
- <button onclick="buy(500)">Развивать</button>
- </div>
- <div class="card">
- <b>Общественный центр</b>
- <p>Стоимость проекта: 250 рублей.</p>
- <button onclick="buy(250)">Развивать</button>
- </div>`;
- }
- }
-
- if(page==="story"){
- html="<h3>Сюжет</h3>";
- if(mode==="historic"){
- html+="<p>Историческая хроника. Изучай события и реальные биографии. Исторические исходы не меняются.</p>";
- }else{
- html+=`
- <div class="card">
- <h3>Городские перемены</h3>
- <p>Жители района хотят открыть общественный центр.</p>
- <button onclick="decision(8,150)">Поддержать проект</button>
- <button onclick="decision(5,100)">Помочь местным мастерским</button>
- </div>`;
- }
- }
-
- c.innerHTML=html;
- document.getElementById("year").textContent=year;
+function persist() {
+  if (save) localStorage.setItem("moscow90_"+mode,JSON.stringify(save));
 }
 
-function districtInfo(name){
- document.getElementById("content").innerHTML=`
- <h3>${name}</h3>
- <p>Историческая карточка района.</p>
- <p class="small">Административные границы и названия необходимо сверять с картой выбранного года.</p>`;
+function startMode(m) {
+  mode=m;
+  save=loadSave(m);
+  $("home").classList.add("hidden");
+  $("game").classList.remove("hidden");
+  showTab("overview");
 }
 
-function buy(cost){
- if(mode!=="alternate")return;
- if(money<cost){alert("Недостаточно средств");return;}
- money-=cost;
- influence=Math.min(100,influence+5);
- save();
- alert("Проект развит. Общественная поддержка увеличилась.");
- show("business");
+function goHome() {
+  persist();
+  $("game").classList.add("hidden");
+  $("home").classList.remove("hidden");
 }
 
-function decision(points,cost){
- if(money<cost){alert("Недостаточно средств");return;}
- money-=cost;
- influence=Math.min(100,influence+points);
- year=Math.min(2000,year+1);
- save();
- alert("Решение принято. Поддержка: "+influence);
- show("story");
+function showTab(t) {
+  tab=t;
+  const s=$("screen");
+  if(t==="overview") renderOverview(s);
+  if(t==="map") renderMap(s);
+  if(t==="business") renderBusiness(s);
+  if(t==="missions") renderMissions(s);
+  if(t==="events") renderEvents(s);
+  if(t==="archive") renderArchive(s);
+  persist();
 }
 
-document.getElementById("year").textContent=year;
-setMode(mode);
+function stats() {
+  return `
+  <div class="stats">
+    <div class="stat"><b>${save.money.toLocaleString("ru-RU")} ₽</b><span>Деньги</span></div>
+    <div class="stat"><b>${save.reputation}</b><span>Репутация</span></div>
+    <div class="stat"><b>${save.influence}</b><span>Влияние</span></div>
+    <div class="stat"><b>${save.level}</b><span>Уровень</span></div>
+  </div>`;
+}
+
+function renderOverview(s) {
+  const income=save.owned.reduce((a,id)=>{
+    const b=businesses.find(x=>x.id===id);
+    return a+(b?b.income:0);
+  },0);
+  s.innerHTML=`
+    <div class="hero">
+      <div class="small gold">${mode==="history"?"ИСТОРИЧЕСКИЙ АРХИВ":"АЛЬТЕРНАТИВНАЯ РЕАЛЬНОСТЬ"}</div>
+      <h2>${mode==="history"?"Москва, "+save.year+" год":"Твоя организация"}</h2>
+      <p class="small">${mode==="history"?"Изучай события, районы и исторические материалы.":"Развивай предприятия и общественные проекты."}</p>
+    </div>
+    ${stats()}
+    ${mode==="history" ? `
+      <div class="panel">
+        <h3>📚 Исторический режим</h3>
+        <p class="small">Это документальный раздел. Здесь нет управления реальными преступными группировками или вымышленных действий от имени исторических лиц.</p>
+        <button class="full primary" onclick="showTab('archive')">Открыть исторический архив</button>
+      </div>` : `
+      <div class="panel">
+        <h3>📊 Финансовое положение</h3>
+        <p>Доход предприятий за игровой месяц: <b class="gold">${income.toLocaleString("ru-RU")} ₽</b></p>
+        <p class="small">Доход начисляется при переходе к следующему месяцу.</p>
+        <button class="full primary" onclick="nextMonth()">Перейти к следующему месяцу</button>
+      </div>
+      <div class="panel">
+        <h3>🏙️ Развитие города</h3>
+        <p class="small">Поддерживай местные проекты, создавай рабочие места и повышай доверие жителей.</p>
+        <button class="full" onclick="showTab('map')">Открыть районы</button>
+      </div>`}`;
+}
+
+function renderMap(s) {
+  let html=`<h2>🗺️ Районы Москвы</h2>`;
+  html+=`<p class="small">${mode==="history"?"Справочник районов.":"Развивай влияние через предприятия и общественные инициативы."}</p>`;
+  districts.forEach((d,i)=>{
+    const value=save.districts[d]||0;
+    html+=`<div class="item">
+      <div class="item-top"><b>${d}</b><span class="tag">${mode==="history"?"Архив":"Влияние "+value}</span></div>
+      ${mode==="alt"?`
+        <div class="bar"><div style="width:${Math.min(value,100)}%"></div></div>
+        <button class="full" onclick="developDistrict('${d.replace(/'/g,"\\'")}')">Поддержать район · 1 000 ₽</button>
+      `:`<p class="small">Материалы о районе и его истории можно дополнить отдельными архивными заметками.</p>`}
+    </div>`;
+  });
+  s.innerHTML=html;
+}
+
+function renderBusiness(s) {
+  if(mode==="history") {
+    s.innerHTML=`<h2>🏢 Экономическая справка</h2>
+      <div class="panel"><p>В 1990-е годы Москва переживала переход к рыночной экономике. Менялись торговля, сфера услуг, частное предпринимательство и городская инфраструктура.</p><p class="small">Игровая покупка предприятий доступна только в альтернативном режиме.</p></div>`;
+    return;
+  }
+  let html=`<h2>🏢 Предприятия</h2>
+  <div class="panel"><b>Твои предприятия: ${save.owned.length}</b><p class="small">Покупай предприятия и получай доход каждый игровой месяц.</p></div>`;
+  businesses.forEach(b=>{
+    const owned=save.owned.includes(b.id);
+    html+=`<div class="item">
+      <div class="item-top"><b>${b.name}</b><span class="tag">${owned?"Куплено":b.cost.toLocaleString("ru-RU")+" ₽"}</span></div>
+      <p class="small">${b.desc}</p>
+      <p>Доход: <b class="gold">${b.income.toLocaleString("ru-RU")} ₽/мес.</b></p>
+      <button class="full ${owned?"green":"primary"}" ${owned?"disabled":""} onclick="buyBusiness('${b.id}')">${owned?"Уже приобретено":"Купить предприятие"}</button>
+    </div>`;
+  });
+  s.innerHTML=html;
+}
+
+function buyBusiness(id) {
+  const b=businesses.find(x=>x.id===id);
+  if(!b||save.owned.includes(id)) return;
+  if(save.money<b.cost) return alert("Недостаточно денег!");
+  save.money-=b.cost;
+  save.owned.push(id);
+  save.reputation+=3;
+  persist();
+  renderBusiness($("screen"));
+}
+
+function developDistrict(d) {
+  if(mode!=="alt") return;
+  if(save.money<1000) return alert("Недостаточно денег!");
+  save.money-=1000;
+  save.districts[d]=Math.min(100,(save.districts[d]||0)+8);
+  save.influence+=3;
+  save.reputation+=2;
+  checkLevel();
+  persist();
+  renderMap($("screen"));
+}
+
+function nextMonth() {
+  if(mode!=="alt") return;
+  const income=save.owned.reduce((a,id)=>{
+    const b=businesses.find(x=>x.id===id);
+    return a+(b?b.income:0);
+  },0);
+  save.money+=income;
+  save.year++;
+  save.reputation=Math.max(0,save.reputation-1);
+  checkLevel();
+  persist();
+  alert("Новый игровой период! Доход: "+income.toLocaleString("ru-RU")+" ₽");
+  showTab("overview");
+}
+
+function checkLevel() {
+  const newLevel=1+Math.floor((save.reputation+save.influence)/30);
+  if(newLevel>save.level) {
+    save.level=newLevel;
+    alert("Новый уровень организации: "+newLevel+"!");
+  }
+}
+
+function renderMissions(s) {
+  if(mode==="history") {
+    s.innerHTML=`<h2>📌 Исторические исследования</h2>
+    <div class="item"><b>Хронология 1991–2000</b><p class="small">Изучай ключевые политические и экономические события.</p></div>
+    <div class="item"><b>Городская история</b><p class="small">Сравнивай развитие районов и изменения городской среды.</p></div>`;
+    return;
+  }
+  const tasks=[
+    {id:"first",title:"Первое предприятие",desc:"Приобрести любое предприятие.",done:save.owned.length>=1,reward:1500},
+    {id:"three",title:"Малый бизнес",desc:"Приобрести три предприятия.",done:save.owned.length>=3,reward:5000},
+    {id:"district",title:"Развитие района",desc:"Повысить влияние в любом районе до 25.",done:Object.values(save.districts).some(x=>x>=25),reward:2500},
+    {id:"rep",title:"Хорошая репутация",desc:"Набрать 30 очков репутации.",done:save.reputation>=30,reward:3000}
+  ];
+  let html="<h2>🎯 Задания</h2>";
+  tasks.forEach(t=>{
+    const completed=save.completed.includes(t.id);
+    html+=`<div class="item">
+      <b>${t.title}</b><p class="small">${t.desc}</p>
+      <p>Награда: <span class="gold">${t.reward} ₽</span></p>
+      ${completed?`<span class="tag">Выполнено</span>`:
+      t.done?`<button class="full green" onclick="claimTask('${t.id}',${t.reward})">Забрать награду</button>`:
+      `<span class="small">Пока не выполнено</span>`}
+    </div>`;
+  });
+  s.innerHTML=html;
+}
+
+function claimTask(id,reward) {
+  if(save.completed.includes(id)) return;
+  save.completed.push(id);
+  save.money+=reward;
+  save.reputation+=3;
+  checkLevel();
+  persist();
+  renderMissions($("screen"));
+}
+
+function renderEvents(s) {
+  if(mode==="history") {
+    s.innerHTML="<h2>📰 Хронология</h2>";
+    events.forEach(e=>{
+      s.innerHTML+=`<div class="item"><b class="gold">${e[0]}</b><p class="small">${e[1]}</p></div>`;
+    });
+    return;
+  }
+  let html="<h2>🎲 События города</h2>";
+  html+=`<div class="panel"><p>Время от времени город сталкивается с новыми возможностями и проблемами. Выбирай решения, которые влияют на репутацию, финансы и развитие.</p><button class="full primary" onclick="newStory()">Получить событие</button></div>`;
+  if(activeEvent) {
+    html+=`<div class="item"><h3>${activeEvent.title}</h3><p class="small">${activeEvent.text}</p>`;
+    activeEvent.choices.forEach((c,i)=>{
+      html+=`<button class="full" onclick="chooseStory(${i})">${c.name}</button>`;
+    });
+    html+="</div>";
+  }
+  s.innerHTML=html;
+}
+
+function newStory() {
+  if(mode!=="alt") return;
+  activeEvent=stories[Math.floor(Math.random()*stories.length)];
+  renderEvents($("screen"));
+}
+
+function chooseStory(i) {
+  if(!activeEvent) return;
+  const c=activeEvent.choices[i];
+  if(save.money+c.money<0) return alert("Недостаточно денег для этого решения.");
+  save.money+=c.money;
+  save.reputation=Math.max(0,save.reputation+c.rep);
+  save.influence+=c.influence;
+  activeEvent=null;
+  checkLevel();
+  persist();
+  renderEvents($("screen"));
+}
+
+function renderArchive(s) {
+  if(mode==="alt") {
+    s.innerHTML=`<h2>📚 Архив</h2>
+      <div class="panel"><p>В альтернативной реальности история вымышлена. Здесь действуют придуманные организации и персонажи.</p></div>
+      <div class="item"><b>Союз Речной</b><p class="small">Вымышленное объединение предпринимателей, развивающее торговлю и городские проекты.</p></div>
+      <div class="item"><b>Кооператив Южный</b><p class="small">Вымышленная организация, специализирующаяся на предприятиях и сфере услуг.</p></div>
+      <div class="item"><b>Артель Восток</b><p class="small">Вымышленное объединение, вкладывающее средства в городскую инфраструктуру.</p></div>`;
+    return;
+  }
+  let html="<h2>📚 Исторический архив</h2>";
+  html+="<div class='panel'><p class='small'>Справочные карточки не заменяют архивные документы. Отдельные сведения о криминальных организациях могут быть спорными или различаться в источниках.</p></div>";
+  html+="<h3>Организации</h3>";
+  historicalGroups.forEach(g=>{
+    html+=`<div class="item"><b>${g.name}</b><p class="small">${g.info}</p></div>`;
+  });
+  html+="<h3>Исторические личности</h3>";
+  historicalPeople.forEach(p=>{
+    html+=`<div class="item"><b>${p.name}</b><p class="small">${p.info}</p></div>`;
+  });
+  s.innerHTML=html;
+}
+
+function showAbout() {
+  alert("Москва 90-х — игровой проект о городской истории и альтернативной реальности. Исторический режим носит справочный характер. Альтернативный режим использует вымышленные организации и игровые события.");
+}
 </script>
 </body>
 </html>
